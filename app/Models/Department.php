@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string name
+ * @method static paginate($get)
  */
 class Department extends Model
 {
