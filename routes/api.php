@@ -22,5 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'departments'], function () {
     Route::get('/', [DepartmentController::class, 'index']);
     Route::post('/', [DepartmentController::class, 'store']);
+    Route::get('/{id}', [DepartmentController::class, 'show']);
+    Route::put('/{id}', [DepartmentController::class, 'update']);
 });
 

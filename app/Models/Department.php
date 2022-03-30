@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property string name
  * @method static paginate($get)
+ * @method static find($id)
+ * @method static findOrFail(int $id)
  */
 class Department extends Model
 {

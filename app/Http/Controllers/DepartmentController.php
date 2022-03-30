@@ -41,24 +41,31 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return JsonResponse
      */
     public function show($id)
     {
-        //
+        $department = Department::find($id);
+
+        return response()->json($department);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param $id
+     * @return JsonResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $department = Department::findOrFail($id);
+        $department->name = $request->get('name');
+
+        $department->save();
+
+        return response()->json($department);
     }
 
     /**
