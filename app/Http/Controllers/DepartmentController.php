@@ -44,7 +44,7 @@ class DepartmentController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         $department = Department::find($id);
 
@@ -54,11 +54,11 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param $id
      * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         $department = Department::findOrFail($id);
         $department->name = $request->get('name');
@@ -71,11 +71,13 @@ class DepartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
-        //
+        $department = Department::destroy($id);
+
+        return response()->json($department);
     }
 }
