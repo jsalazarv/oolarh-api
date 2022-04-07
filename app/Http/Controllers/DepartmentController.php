@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Resources\DepartmentResource;
 use App\Models\Department;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -18,7 +17,7 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
-        $departments = Department::paginate($request->get('pageSize'));
+        $departments = Department::paginate($request->get('pageSize', 10));
 
         return DepartmentResource::collection($departments);
     }
@@ -27,28 +26,28 @@ class DepartmentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreDepartmentRequest $request
-     * @return JsonResponse
+     * @return DepartmentResource
      */
-    public function store(StoreDepartmentRequest $request): JsonResponse
+    public function store(StoreDepartmentRequest $request): DepartmentResource
     {
         $department = new Department();
         $department->name = $request->get('name');
         $department->save();
 
-        return response()->json($department);
+        return new DepartmentResource($department);
     }
 
     /**
      * Display the specified resource.
      *
      * @param $id
-     * @return JsonResponse
+     * @return DepartmentResource
      */
-    public function show($id): JsonResponse
+    public function show($id): DepartmentResource
     {
         $department = Department::find($id);
 
-        return response()->json($department);
+        return new DepartmentResource($department);
     }
 
     /**
@@ -56,28 +55,26 @@ class DepartmentController extends Controller
      *
      * @param Request $request
      * @param $id
-     * @return JsonResponse
+     * @return DepartmentResource
      */
-    public function update(Request $request, $id): JsonResponse
+    public function update(Request $request, $id): DepartmentResource
     {
         $department = Department::findOrFail($id);
         $department->name = $request->get('name');
 
         $department->save();
 
-        return response()->json($department);
+        return new DepartmentResource($department);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param $id
-     * @return JsonResponse
+     * @return void
      */
-    public function destroy($id): JsonResponse
+    public function destroy($id): void
     {
-        $department = Department::destroy($id);
-
-        return response()->json($department);
+        Department::destroy($id);
     }
 }
