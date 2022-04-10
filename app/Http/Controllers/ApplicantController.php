@@ -28,12 +28,12 @@ class ApplicantController extends Controller
     public function store(StoreApplicantRequest $request): ApplicantResource
     {
         $resume = $request->file('resume');
-        $applicant =  Applicant::create($request->all());
+        $applicant = Applicant::create($request->all());
         $applicant->resume()->create([
             'path' => $resume->store('public'),
             'file_name' => $resume->getClientOriginalName()
         ]);
-
+        $applicant->load('resume');
         return new ApplicantResource($applicant);
     }
 
