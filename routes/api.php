@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\DepartmentController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +26,9 @@ Route::group(['prefix' => 'departments'], function () {
     Route::get('/{id}', [DepartmentController::class, 'show']);
     Route::put('/{id}', [DepartmentController::class, 'update']);
     Route::delete('/{id}', [DepartmentController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'applicants'], function () {
+    Route::post('/', [ApplicantController::class, 'store']);
 });
 
