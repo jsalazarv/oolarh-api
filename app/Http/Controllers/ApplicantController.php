@@ -42,6 +42,18 @@ class ApplicantController extends Controller
     }
 
     /**
+     * @param $id
+     * @return ApplicantResource
+     */
+    public function show($id): ApplicantResource
+    {
+        $applicant = Applicant::find($id);
+        $applicant->load('resume');
+
+        return new ApplicantResource($applicant);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
