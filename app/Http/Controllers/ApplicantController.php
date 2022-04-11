@@ -12,11 +12,15 @@ class ApplicantController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $applicants = Applicant::paginate($request->get('pageSize', 10));
+        $applicants->load('resume');
+
+        return ApplicantResource::collection($applicants);
     }
 
     /**

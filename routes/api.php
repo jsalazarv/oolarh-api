@@ -29,6 +29,7 @@ Route::group(['prefix' => 'departments'], function () {
 });
 
 Route::group(['prefix' => 'applicants'], function () {
+    Route::get('/', [ApplicantController::class, 'index']);
     Route::post('/', [ApplicantController::class, 'store']);
 });
 
