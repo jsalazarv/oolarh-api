@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static paginate($get)
+ * @method static find($id)
+ * @method static findOrFail($id)
+ */
 class Applicant extends Model
 {
     use HasFactory;
@@ -17,6 +22,7 @@ class Applicant extends Model
         'email',
         'cellphone',
         'psychometric_test',
+        'status',
     ];
 
     public function resume()
