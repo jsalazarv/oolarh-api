@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\applicant;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreApplicantRequest extends FormRequest
+class UpdateApplicantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -22,7 +22,7 @@ class StoreApplicantRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
             'names' => ['required', 'string', 'max:255'],
@@ -34,22 +34,21 @@ class StoreApplicantRequest extends FormRequest
                 'email',
                 'string',
                 'max:255',
-                'unique:applicants,email'
+                Rule::unique('applicants')->ignore(request()->route('id'))
             ],
             'cellphone' => [
                 'required',
                 'string',
-                'max:255',
-                'unique:applicants,cellphone'
+                Rule::unique('applicants')->ignore(request()->route('id'))
             ],
             'psychometric_test' => [
                 'required',
                 'url',
                 'max:255',
-                'unique:applicants,psychometric_test'
+                Rule::unique('applicants')->ignore(request()->route('id'))
             ],
-            'resume' => ['required','file', 'mimes:pdf', 'max:5000'],
-            // TODO: only on update - 'status' => ['string', 'max:255']
+            'resume' => ['file', 'mimes:pdf', 'max:5000'],
+            'status' => ['required', 'string', 'max:255']
         ];
     }
 }

@@ -24,6 +24,7 @@ class ApplicantResource extends JsonResource
             'cellphone' => $this->cellphone,
             'psychometric_test' => $this->psychometric_test,
             'resume' => new ResumeResource($this->whenLoaded('resume')),
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

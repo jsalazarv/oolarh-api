@@ -32,5 +32,6 @@ Route::group(['prefix' => 'applicants'], function () {
     Route::get('/', [ApplicantController::class, 'index']);
     Route::post('/', [ApplicantController::class, 'store']);
     Route::get('/{id}', [ApplicantController::class, 'show']);
+    Route::put('/{id}', [ApplicantController::class, 'update']);
 });
 
