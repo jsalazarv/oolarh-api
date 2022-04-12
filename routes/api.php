@@ -33,5 +33,6 @@ Route::group(['prefix' => 'applicants'], function () {
     Route::post('/', [ApplicantController::class, 'store']);
     Route::get('/{id}', [ApplicantController::class, 'show']);
     Route::put('/{id}', [ApplicantController::class, 'update']);
+    Route::delete('/{id}', [ApplicantController::class, 'destroy']);
 });
 

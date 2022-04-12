@@ -78,11 +78,14 @@ class ApplicantController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Applicant  $applicant
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return void
      */
-    public function destroy(Applicant $applicant)
+    public function destroy($id): void
     {
-        //
+        $applicant = Applicant::findOrFail($id);
+        $applicant->load('resume');
+        $applicant->resume()->delete();
+        Applicant::destroy($id);
     }
 }
