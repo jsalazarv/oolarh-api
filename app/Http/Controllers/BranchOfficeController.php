@@ -61,7 +61,10 @@ class BranchOfficeController extends Controller
      */
     public function show($id)
     {
-        //
+        $branchOffice = BranchOffice::find($id);
+        $branchOffice->load('address','contact');
+
+        return new BranchOfficeResource($branchOffice);
     }
 
     /**
