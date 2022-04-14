@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\BranchOfficeController;
 use App\Http\Controllers\DepartmentController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,3 +37,10 @@ Route::group(['prefix' => 'applicants'], function () {
     Route::delete('/{id}', [ApplicantController::class, 'destroy']);
 });
 
+Route::group(['prefix' => 'branch-offices'], function () {
+    Route::get('/', [BranchOfficeController::class, 'index']);
+    Route::post('/', [BranchOfficeController::class, 'store']);
+    Route::get('/{id}', [BranchOfficeController::class, 'show']);
+    Route::put('/{id}', [BranchOfficeController::class, 'update']);
+    Route::delete('/{id}', [BranchOfficeController::class, 'destroy']);
+});
