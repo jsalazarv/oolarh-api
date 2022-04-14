@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BranchOfficeResource;
 use App\Models\BranchOffice;
 use App\Http\Requests\branchOffice\StoreBranchOfficeRequest;
+use App\Http\Requests\branchOffice\UpdateBranchOfficeRequest;
 use Illuminate\Http\Request;
 
 class BranchOfficeController extends Controller
@@ -74,9 +75,28 @@ class BranchOfficeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBranchOfficeRequest $request, $id)
     {
-        //
+       $branchOffice = BranchOffice::findOrFail($id);
+       $branchOffice->contact()->update([
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'cellphone' => $request->cellphone
+    ]);
+    $branchOffice->address()->update([
+        'country' => $request->country,
+         'state' => $request->state,
+         'municipality' => $request->municipality,
+         'suburb' => $request->suburb,
+         'street' => $request->street,
+         'outdoor_number' => $request->outdoor_number,
+         'interior_number' => $request->interior_number,
+         'postal_code' => $request->postal_code
+         ]);
+         $branchOffice->load('address', 'contact');
+         $branchOffice->update($request->all());
+
+         return new BranchOfficeResource($branchOffice);
     }
 
     /**
