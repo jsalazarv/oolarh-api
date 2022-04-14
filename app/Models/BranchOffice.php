@@ -25,12 +25,9 @@ class BranchOffice extends Model
         return $this->morphOne(Contact::class, 'contactable');
     }
 
-
     public function address()
     {
         return $this->morphOne(Address::class, 'addressable');
     }
-
-
 }
 

@@ -17,6 +17,10 @@ class BranchOfficeResource extends JsonResource
         return [
             'id' =>$this->id,
             'name' => $this->name,
+            'contact' => new ContactResource($this->whenLoaded('contact')),
+            'address' => new AddressResource($this->whenLoaded('address')),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

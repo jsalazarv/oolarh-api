@@ -19,6 +19,8 @@ class BranchOfficeController extends Controller
     {
         $branchOffice = BranchOffice::paginate($request->get('pageSize', 10));
 
+        $branchOffice->load('address', 'contact');
+
         return BranchOfficeResource::collection($branchOffice);
     }
 
@@ -31,8 +33,22 @@ class BranchOfficeController extends Controller
     public function store(StoreBranchOfficeRequest $request)
     {
         $branchOffice = BranchOffice::create($request->all());
+        $branchOffice->contact()->create([
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'cellphone' => $request->cellphone
+        ]);
+        $branchOffice->address()->create([
+            'country' => $request->country,
+             'state' => $request->state,
+             'municipality' => $request->municipality,
+             'suburb' => $request->suburb,
+             'street' => $request->street,
+             'outdoor_number' => $request->outdoor_number,
+             'interior_number' => $request->interior_number,
+             'postal_code' => $request->postal_code
+        ]);
         $branchOffice->load('address', 'contact');
-
 
         return new BranchOfficeResource($branchOffice);
     }

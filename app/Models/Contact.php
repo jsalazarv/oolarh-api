@@ -9,18 +9,14 @@ class Contact extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'email',
         'phone',
         'cellphone'
     ];
 
-
     public function contactable()
     {
         return $this->morphTo();
     }
-
-
 }
