@@ -107,6 +107,10 @@ class BranchOfficeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $branchOffice = BranchOffice::findOrFail($id);
+        $branchOffice->load('address', 'contact');
+        $branchOffice->contact()->delete();
+        $branchOffice->address()->delete();
+        BranchOffice::destroy($id);
     }
 }
