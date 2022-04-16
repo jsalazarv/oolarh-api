@@ -21,17 +21,9 @@ class ApplicantObserver
     public function updated(Applicant $applicant)
     {
         $status = $applicant->status;
-
         if($status === "accepted") {
-            $employee = new Employee();
-            $employee->names = $applicant->names;
-            $employee->first_surname = $applicant->first_surname;
-            $employee->second_surname = $applicant->second_surname;
-            $employee->email = $applicant->email;
-            $employee->cellphone = $applicant->cellphone;
-            $employee->psychometric_test = $applicant->psychometric_test;
-            $employee->vacancy = $applicant->vacancy;
-
+            // TODO: check if the employee already exists
+            $employee = new Employee($applicant->getAttributes());
             $employee->save();
         }
     }
