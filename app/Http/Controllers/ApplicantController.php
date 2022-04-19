@@ -7,6 +7,7 @@ use App\Http\Requests\StoreApplicantRequest;
 use App\Http\Resources\ApplicantResource;
 use App\Models\Applicant;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Exception;
 
 class ApplicantController extends Controller
 {
@@ -65,10 +66,12 @@ class ApplicantController extends Controller
     {
         $resume = $request->file('resume');
         $applicant = Applicant::findOrFail($id);
-        $applicant->resume()->update([
-            'path' => $resume->store('public'),
-            'file_name' => $resume->getClientOriginalName()
-        ]);
+        if ($request->file('resume')) {
+            $applicant->resume()->update([
+                'path' => $resume->store('public'),
+                'file_name' => $resume->getClientOriginalName()
+            ]);
+        }
         $applicant->load('resume');
         $applicant->update($request->all());
 

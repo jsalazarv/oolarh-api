@@ -25,30 +25,30 @@ class UpdateApplicantRequest extends FormRequest
     public function rules()
     {
         return [
-            'names' => ['required', 'string', 'max:255'],
-            'vacancy' => ['required', 'integer', 'max:255'],
-            'first_surname' => ['required', 'string', 'max:255'],
-            'second_surname' => ['required', 'string', 'max:255'],
+            'names' => ['sometimes', 'string', 'max:255'],
+            'vacancy' => ['sometimes', 'integer', 'max:255'],
+            'first_surname' => ['sometimes', 'string', 'max:255'],
+            'second_surname' => ['sometimes', 'string', 'max:255'],
             'email' => [
-                'required',
+                'sometimes',
                 'email',
                 'string',
                 'max:255',
                 Rule::unique('applicants')->ignore(request()->route('id'))
             ],
             'cellphone' => [
-                'required',
+                'sometimes',
                 'string',
                 Rule::unique('applicants')->ignore(request()->route('id'))
             ],
             'psychometric_test' => [
-                'required',
+                'sometimes',
                 'url',
                 'max:255',
                 Rule::unique('applicants')->ignore(request()->route('id'))
             ],
-            'resume' => ['file', 'mimes:pdf', 'max:5000'],
-            'status' => ['required', 'string', 'max:255']
+            'resume' => ['sometimes','file', 'mimes:pdf', 'max:5000'],
+            'status' => ['sometimes', 'string', 'max:255']
         ];
     }
 }
