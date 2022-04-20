@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApplicantResource extends JsonResource
+class EmployeeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,14 +17,13 @@ class ApplicantResource extends JsonResource
         return [
             'id' => $this->id,
             'names' => $this->names,
-            'fullName' => $this->names.' '.$this->first_surname.' '.$this->second_surname,
+            'fullName' => $this->names . ' ' . $this->first_surname . ' ' . $this->second_surname,
             'vacancy' => $this->vacancy,
             'first_surname' => $this->first_surname,
             'second_surname' => $this->second_surname,
             'email' => $this->email,
             'cellphone' => $this->cellphone,
             'psychometric_test' => $this->psychometric_test,
-            'resume' => new ResumeResource($this->whenLoaded('resume')),
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

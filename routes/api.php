@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\BranchOfficeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,10 @@ Route::group(['prefix' => 'applicants'], function () {
     Route::get('/{id}', [ApplicantController::class, 'show']);
     Route::put('/{id}', [ApplicantController::class, 'update']);
     Route::delete('/{id}', [ApplicantController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'employees'], function () {
+    Route::get('/', [EmployeeController::class, 'index']);
 });
 
 Route::group(['prefix' => 'branch-offices'], function () {
