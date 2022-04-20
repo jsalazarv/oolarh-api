@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('cellphone')->unique();
             $table->string('psychometric_test')->unique();
-            $table->enum('status', ['refused', 'processing', 'accepted'])->default('processing');
+            $table->enum('status', ['postulate', 'processing', 'accepted', 'refused'])->default('postulate');
             $table->timestamps();
         });
     }
