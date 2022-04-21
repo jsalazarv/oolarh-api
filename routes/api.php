@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\BranchOfficeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,18 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 
+Route::group(['prefix' => 'applicants'], function () {
+    Route::get('/', [ApplicantController::class, 'index']);
+    Route::post('/', [ApplicantController::class, 'store']);
+    Route::get('/{id}', [ApplicantController::class, 'show']);
+    Route::put('/{id}', [ApplicantController::class, 'update']);
+    Route::delete('/{id}', [ApplicantController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'employees'], function () {
+    Route::get('/', [EmployeeController::class, 'index']);
+    Route::delete('/{id}', [EmployeeController::class, 'destroy']);
+});
 
 Route::group(['prefix' => 'departments'], function () {
     Route::get('/', [DepartmentController::class, 'index']);
@@ -27,14 +40,6 @@ Route::group(['prefix' => 'departments'], function () {
     Route::get('/{id}', [DepartmentController::class, 'show']);
     Route::put('/{id}', [DepartmentController::class, 'update']);
     Route::delete('/{id}', [DepartmentController::class, 'destroy']);
-});
-
-Route::group(['prefix' => 'applicants'], function () {
-    Route::get('/', [ApplicantController::class, 'index']);
-    Route::post('/', [ApplicantController::class, 'store']);
-    Route::get('/{id}', [ApplicantController::class, 'show']);
-    Route::put('/{id}', [ApplicantController::class, 'update']);
-    Route::delete('/{id}', [ApplicantController::class, 'destroy']);
 });
 
 Route::group(['prefix' => 'branch-offices'], function () {
