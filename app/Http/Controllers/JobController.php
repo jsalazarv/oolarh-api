@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\job\StoreJobRequest;
+use App\Http\Resources\JobResource;
+use App\Models\Job;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -22,9 +25,11 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreJobRequest $request)
     {
-        //
+        $jobs = Job::create($request->all());
+        return new JobResource($jobs);
+
     }
 
     /**
