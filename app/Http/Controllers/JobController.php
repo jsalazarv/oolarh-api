@@ -41,7 +41,8 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        //
+        $jobs = Job::find($id);
+        return new JobResource($jobs);
     }
 
     /**
