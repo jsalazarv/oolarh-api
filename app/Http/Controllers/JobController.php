@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\job\StoreJobRequest;
+use App\Http\Requests\job\UpdateJobRequest;
 use App\Http\Resources\JobResource;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -52,9 +53,11 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateJobRequest $request, $id)
     {
-        //
+        $jobs = Job::findOrFail($id);
+        $jobs->update($request->all());
+        return new JobResource($jobs);
     }
 
     /**
