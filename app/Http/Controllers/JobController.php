@@ -68,6 +68,6 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Job::destroy($id);
     }
 }
