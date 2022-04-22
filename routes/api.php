@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\BranchOfficeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,4 +49,12 @@ Route::group(['prefix' => 'branch-offices'], function () {
     Route::get('/{id}', [BranchOfficeController::class, 'show']);
     Route::put('/{id}', [BranchOfficeController::class, 'update']);
     Route::delete('/{id}', [BranchOfficeController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'jobs'], function () {
+    Route::get('/', [JobController::class, 'index']);
+    Route::post('/', [JobController::class, 'store']);
+    Route::get('/{id}', [JobController::class, 'show']);
+    Route::put('/{id}', [JobController::class, 'update']);
+    Route::delete('/{id}', [JobController::class, 'destroy']);
 });
