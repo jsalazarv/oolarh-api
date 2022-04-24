@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\BranchOfficeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\GenderController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,4 +58,8 @@ Route::group(['prefix' => 'jobs'], function () {
     Route::get('/{id}', [JobController::class, 'show']);
     Route::put('/{id}', [JobController::class, 'update']);
     Route::delete('/{id}', [JobController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'genders'], function () {
+    Route::get('/', [GenderController::class, 'index']);
 });

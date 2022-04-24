@@ -7,29 +7,33 @@ use App\Http\Requests\job\UpdateJobRequest;
 use App\Http\Resources\JobResource;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class JobController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return AnonymousResourceCollection
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $jobs = Job::paginate($request->get("'pageSize', 10"));
+
         return JobResource::collection($jobs);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreJobRequest $request
+     * @return JobResource
      */
-    public function store(StoreJobRequest $request)
+    public function store(StoreJobRequest $request): JobResource
     {
         $jobs = Job::create($request->all());
+
         return new JobResource($jobs);
 
     }
@@ -37,36 +41,38 @@ class JobController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return JobResource
      */
-    public function show($id)
+    public function show(int $id): JobResource
     {
         $jobs = Job::find($id);
+
         return new JobResource($jobs);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateJobRequest $request
+     * @param int $id
+     * @return JobResource
      */
-    public function update(UpdateJobRequest $request, $id)
+    public function update(UpdateJobRequest $request, int $id): JobResource
     {
         $jobs = Job::findOrFail($id);
         $jobs->update($request->all());
+
         return new JobResource($jobs);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return void
      */
-    public function destroy($id)
+    public function destroy($id): void
     {
         Job::destroy($id);
     }
