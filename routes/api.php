@@ -6,6 +6,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GenderController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,4 +63,10 @@ Route::group(['prefix' => 'jobs'], function () {
 
 Route::group(['prefix' => 'genders'], function () {
     Route::get('/', [GenderController::class, 'index']);
+});
+
+Route::group(['prefix' => 'locations'], function () {
+    Route::get('/countries', [LocationController::class, 'countries']);
+    Route::get('/states/{country}', [LocationController::class, 'states']);
+    Route::get('/cities/{state}', [LocationController::class, 'cities']);
 });

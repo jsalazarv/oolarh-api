@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'location_service' => [
+        'token' => env('UNIVERSAL_TUTORIAL_TOKEN'),
+        'email' => env('UNIVERSAL_TUTORIAL_EMAIL'),
+        'url' => env('UNIVERSAL_TUTORIAL_URL'),
+    ]
+
 ];
