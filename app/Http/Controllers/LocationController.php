@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Clients\LocationClient;
+use App\Http\Resources\LocationResource;
 
 class LocationController extends Controller
 {
@@ -16,34 +17,61 @@ class LocationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \GuzzleHttp\Promise\PromiseInterface|\Illuminate\Http\Client\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function countries()
     {
         $countries = $this->client->getCountries();
 
-        return $countries;
+        return LocationResource::collection([
+            'data' => $countries->json(),
+            'links' => [
+                "first" => "",
+                "last" => "",
+                "prev" => null,
+                "next" => null
+            ],
+            'meta' => []
+        ]);
     }
 
     /**
      * @param $country
-     * @return \GuzzleHttp\Promise\PromiseInterface|\Illuminate\Http\Client\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function states($country)
     {
         $states = $this->client->getStatesByCountry($country);
 
-        return $states;
+        return LocationResource::collection([
+            'data' => $states->json(),
+            'links' => [
+                "first" => "",
+                "last" => "",
+                "prev" => null,
+                "next" => null
+            ],
+            'meta' => []
+        ]);
     }
 
     /**
      * @param $state
-     * @return \GuzzleHttp\Promise\PromiseInterface|\Illuminate\Http\Client\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function cities($state)
     {
         $cities = $this->client->getCitiesByState($state);
 
-        return $cities;
+        return LocationResource::collection([
+            'data' => $cities->json(),
+            'links' => [
+                "first" => "",
+                "last" => "",
+                "prev" => null,
+                "next" => null
+            ],
+            'meta' => []
+        ]);
     }
 }
