@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class LocationResource extends JsonResource
+class LocationResource extends ResourceCollection
 {
     /**
      * Transform the resource into an array.
@@ -14,6 +14,6 @@ class LocationResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return $this->collection;
     }
 }

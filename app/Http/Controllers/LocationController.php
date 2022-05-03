@@ -22,17 +22,12 @@ class LocationController extends Controller
     public function countries()
     {
         $countries = $this->client->getCountries();
+        $data = collect();
+        $data->put('data', $countries->json());
+        $data->put('links', []);
+        $data->put('meta', []);
 
-        return LocationResource::collection([
-            'data' => $countries->json(),
-            'links' => [
-                "first" => "",
-                "last" => "",
-                "prev" => null,
-                "next" => null
-            ],
-            'meta' => []
-        ]);
+        return LocationResource::collection($data);
     }
 
     /**
@@ -42,36 +37,26 @@ class LocationController extends Controller
     public function states($country)
     {
         $states = $this->client->getStatesByCountry($country);
+        $data = collect();
+        $data->put('data', $states->json());
+        $data->put('links', []);
+        $data->put('meta', []);
 
-        return LocationResource::collection([
-            'data' => $states->json(),
-            'links' => [
-                "first" => "",
-                "last" => "",
-                "prev" => null,
-                "next" => null
-            ],
-            'meta' => []
-        ]);
+        return LocationResource::collection($data);
     }
 
     /**
      * @param $state
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function cities($state)
+    public function cities($contry, $state)
     {
-        $cities = $this->client->getCitiesByState($state);
+        $cities = $this->client->getCitiesByState($contry, $state);
+        $data = collect();
+        $data->put('data', $cities->json());
+        $data->put('links', []);
+        $data->put('meta', []);
 
-        return LocationResource::collection([
-            'data' => $cities->json(),
-            'links' => [
-                "first" => "",
-                "last" => "",
-                "prev" => null,
-                "next" => null
-            ],
-            'meta' => []
-        ]);
+        return LocationResource::collection($data);
     }
 }

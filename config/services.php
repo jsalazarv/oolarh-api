@@ -32,9 +32,8 @@ return [
     ],
 
     'location_service' => [
-        'token' => env('UNIVERSAL_TUTORIAL_TOKEN'),
-        'email' => env('UNIVERSAL_TUTORIAL_EMAIL'),
-        'url' => env('UNIVERSAL_TUTORIAL_URL'),
+        'token' => env('LOCATION_API_TOKEN'),
+        'url' => env('LOCATION_API_URL'),
     ]
 
 ];

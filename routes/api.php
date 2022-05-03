@@ -73,6 +73,6 @@ Route::group(['prefix' => 'genders', 'middleware' => ['auth:sanctum']], function
 
 Route::group(['prefix' => 'locations'], function () {
     Route::get('/countries', [LocationController::class, 'countries']);
-    Route::get('/states/{country}', [LocationController::class, 'states']);
-    Route::get('/cities/{state}', [LocationController::class, 'cities']);
+    Route::get('/countries/{country}/states', [LocationController::class, 'states']);
+    Route::get('/countries/{country}/states/{state}/cities', [LocationController::class, 'cities']);
 });

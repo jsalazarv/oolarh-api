@@ -8,24 +8,13 @@ class LocationClient
 {
     protected $client;
 
-    public function __construct($url, $token, $email)
+    public function __construct($url, $token)
     {
-        $response = Http::withOptions([
-            'base_uri' => $url
-        ])->withHeaders([
-            'Accept' => 'application/json',
-            'api-token' => $token,
-            'user-email' => $email,
-        ])->get("getaccesstoken");
-
-        $authToken = $response->json('auth_token');
-
         $client = Http::withOptions([
             'base_uri' => $url
         ])->withHeaders([
-            'Authorization' => 'Bearer ' . $authToken,
             'Accept' => 'application/json',
-            'user-email' => $email,
+            'X-CSCAPI-KEY' => $token
         ]);
 
         $this->client = $client;
@@ -33,16 +22,16 @@ class LocationClient
 
     public function getCountries()
     {
-        return $this->client->get("/countries/");
+        return $this->client->get("/countries");
     }
 
     public function getStatesByCountry($country)
     {
-        return $this->client->get("/states/" . $country);
+        return $this->client->get("/countries/" . $country . "/states");
     }
 
-    public function getCitiesByState($state)
+    public function getCitiesByState($country, $state)
     {
-        return $this->client->get("/cities/" . $state);
+        return $this->client->get("/countries/" . $country . "/states/" . $state . "/cities");
     }
 }
