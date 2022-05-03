@@ -7,6 +7,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GenderController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,4 +69,10 @@ Route::group(['prefix' => 'jobs', 'middleware' => ['auth:sanctum']], function ()
 
 Route::group(['prefix' => 'genders', 'middleware' => ['auth:sanctum']], function () {
     Route::get('/', [GenderController::class, 'index']);
+});
+
+Route::group(['prefix' => 'locations'], function () {
+    Route::get('/countries', [LocationController::class, 'countries']);
+    Route::get('/countries/{country}/states', [LocationController::class, 'states']);
+    Route::get('/countries/{country}/states/{state}/cities', [LocationController::class, 'cities']);
 });
