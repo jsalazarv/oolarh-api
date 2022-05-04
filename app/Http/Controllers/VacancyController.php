@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\vacancy\StoreVacancyRequest;
+use App\Http\Requests\vacancy\UpdateVacancyRequest;
 use App\Http\Resources\VacancyResource;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
@@ -55,13 +56,17 @@ class VacancyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateVacancyRequest $request
+     * @param $id
+     * @return VacancyResource
      */
-    public function update(Request $request, $id)
+    public function update(UpdateVacancyRequest $request, $id): VacancyResource
     {
-        //
+        $vacancy = Vacancy::findOrFail($id);
+        $vacancy->load('job', 'department', 'branchOffice');
+        $vacancy->update($request->all());
+
+        return new VacancyResource($vacancy);
     }
 
     /**
