@@ -7,6 +7,7 @@ use App\Models\BranchOffice;
 use App\Http\Requests\branchOffice\StoreBranchOfficeRequest;
 use App\Http\Requests\branchOffice\UpdateBranchOfficeRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BranchOfficeController extends Controller
 {
@@ -14,9 +15,9 @@ class BranchOfficeController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return
+     * @return AnonymousResourceCollection
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $branchOffice = BranchOffice::paginate($request->get('pageSize', 10));
 
@@ -28,10 +29,10 @@ class BranchOfficeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreBranchOfficeRequest $request
+     * @return BranchOfficeResource
      */
-    public function store(StoreBranchOfficeRequest $request)
+    public function store(StoreBranchOfficeRequest $request): BranchOfficeResource
     {
         $branchOffice = BranchOffice::create($request->all());
         $branchOffice->contact()->create([
@@ -57,10 +58,10 @@ class BranchOfficeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return BranchOfficeResource
      */
-    public function show($id)
+    public function show($id): BranchOfficeResource
     {
         $branchOffice = BranchOffice::find($id);
         $branchOffice->load('address','contact');
@@ -71,41 +72,42 @@ class BranchOfficeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateBranchOfficeRequest $request
+     * @param $id
+     * @return BranchOfficeResource
      */
-    public function update(UpdateBranchOfficeRequest $request, $id)
+    public function update(UpdateBranchOfficeRequest $request, $id): BranchOfficeResource
     {
        $branchOffice = BranchOffice::findOrFail($id);
        $branchOffice->contact()->update([
         'email' => $request->email,
         'phone' => $request->phone,
         'cellphone' => $request->cellphone
-    ]);
-    $branchOffice->address()->update([
-        'country' => $request->country,
-         'state' => $request->state,
-         'municipality' => $request->municipality,
-         'suburb' => $request->suburb,
-         'street' => $request->street,
-         'outdoor_number' => $request->outdoor_number,
-         'interior_number' => $request->interior_number,
-         'postal_code' => $request->postal_code
-         ]);
-         $branchOffice->load('address', 'contact');
-         $branchOffice->update($request->all());
+        ]);
 
-         return new BranchOfficeResource($branchOffice);
+        $branchOffice->address()->update([
+            'country' => $request->country,
+            'state' => $request->state,
+            'municipality' => $request->municipality,
+            'suburb' => $request->suburb,
+            'street' => $request->street,
+            'outdoor_number' => $request->outdoor_number,
+            'interior_number' => $request->interior_number,
+            'postal_code' => $request->postal_code
+         ]);
+        $branchOffice->load('address', 'contact');
+        $branchOffice->update($request->all());
+
+        return new BranchOfficeResource($branchOffice);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return void
      */
-    public function destroy($id)
+    public function destroy($id): void
     {
         $branchOffice = BranchOffice::findOrFail($id);
         $branchOffice->load('address', 'contact');

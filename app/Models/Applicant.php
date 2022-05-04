@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static paginate($get)
  * @method static find($id)
  * @method static findOrFail($id)
+ * @method static create(array $all)
  */
 class Applicant extends Model
 {

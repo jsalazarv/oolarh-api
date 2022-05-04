@@ -6,17 +6,22 @@ use App\Http\Requests\vacancy\StoreVacancyRequest;
 use App\Http\Resources\VacancyResource;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class VacancyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request): AnonymousResourceCollection
     {
-        //
+        $vacancies = Vacancy::paginate($request->get('pageSize', 10));
+        $vacancies->load('job', 'department', 'branchOffice');
+
+        return VacancyResource::collection($vacancies);
     }
 
     /**

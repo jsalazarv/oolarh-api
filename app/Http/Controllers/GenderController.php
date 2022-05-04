@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\GenderResource;
 use App\Models\Gender;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GenderController extends Controller

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Clients\LocationClient;
 use App\Http\Resources\LocationResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LocationController extends Controller
 {
@@ -17,9 +18,9 @@ class LocationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
-    public function countries()
+    public function countries(): AnonymousResourceCollection
     {
         $countries = $this->client->getCountries();
         $data = collect();
@@ -32,9 +33,9 @@ class LocationController extends Controller
 
     /**
      * @param $country
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
-    public function states($country)
+    public function states($country): AnonymousResourceCollection
     {
         $states = $this->client->getStatesByCountry($country);
         $data = collect();
@@ -46,12 +47,13 @@ class LocationController extends Controller
     }
 
     /**
+     * @param $country
      * @param $state
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
-    public function cities($contry, $state)
+    public function cities($country, $state): AnonymousResourceCollection
     {
-        $cities = $this->client->getCitiesByState($contry, $state);
+        $cities = $this->client->getCitiesByState($country, $state);
         $data = collect();
         $data->put('data', $cities->json());
         $data->put('links', []);
