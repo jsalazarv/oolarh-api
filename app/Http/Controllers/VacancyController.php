@@ -41,12 +41,15 @@ class VacancyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return VacancyResource
      */
-    public function show($id)
+    public function show($id): VacancyResource
     {
-        //
+        $vacancy = Vacancy::find($id);
+        $vacancy->load('job', 'department', 'branchOffice');
+
+        return new VacancyResource($vacancy);
     }
 
     /**

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static create(array $all)
  * @method static paginate($get)
+ * @method static find(int $id)
  */
 class Vacancy extends Model
 {
