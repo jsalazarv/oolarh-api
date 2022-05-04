@@ -29,5 +29,9 @@ class BranchOffice extends Model
     {
         return $this->morphOne(Address::class, 'addressable');
     }
+
+    public function vacancies() {
+        return $this->hasMany(Vacancy::class);
+    }
 }
 

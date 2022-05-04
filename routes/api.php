@@ -8,6 +8,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GenderController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\VacancyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,14 @@ Route::group(['prefix' => 'employees', 'middleware' => ['auth:sanctum']], functi
     Route::delete('/{id}', [EmployeeController::class, 'destroy']);
 });
 
+Route::group(['prefix' => 'vacancies', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', [VacancyController::class, 'index']);
+    Route::post('/', [VacancyController::class, 'store']);
+    Route::get('/{id}', [VacancyController::class, 'show']);
+    Route::put('/{id}', [VacancyController::class, 'update']);
+    Route::delete('/{id}', [VacancyController::class, 'destroy']);
+});
+
 Route::group(['prefix' => 'departments', 'middleware' => ['auth:sanctum']], function () {
     Route::get('/', [DepartmentController::class, 'index']);
     Route::post('/', [DepartmentController::class, 'store']);
@@ -71,7 +80,7 @@ Route::group(['prefix' => 'genders', 'middleware' => ['auth:sanctum']], function
     Route::get('/', [GenderController::class, 'index']);
 });
 
-Route::group(['prefix' => 'locations'], function () {
+Route::group(['prefix' => 'locations', 'middleware' => ['auth:sanctum']], function () {
     Route::get('/countries', [LocationController::class, 'countries']);
     Route::get('/countries/{country}/states', [LocationController::class, 'states']);
     Route::get('/countries/{country}/states/{state}/cities', [LocationController::class, 'cities']);

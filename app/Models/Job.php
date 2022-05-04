@@ -19,4 +19,8 @@ class Job extends Model
         'name',
         'description',
     ];
+
+    public function vacancies() {
+        return $this->hasMany(Vacancy::class);
+    }
 }
