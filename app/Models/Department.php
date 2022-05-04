@@ -23,4 +23,8 @@ class Department extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function vacancies() {
+        return $this->hasMany(Vacancy::class);
+    }
 }
