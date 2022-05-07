@@ -11,13 +11,22 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('vacancies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('branch_office_id')->constrained('branch_offices');
-            $table->foreignId('department_id')->constrained('departments');
-            $table->foreignId('job_id')->constrained('jobs');
+            $table->foreignId('branch_office_id')
+                ->nullable()
+                ->constrained('branch_offices')
+                ->nullOnDelete();
+            $table->foreignId('department_id')
+                ->nullable()
+                ->constrained('departments')
+                ->nullOnDelete();
+            $table->foreignId('job_id')
+                ->nullable()
+                ->constrained('jobs')
+                ->nullOnDelete();
             $table->string('name');
             $table->string('description');
             $table->string('salary');
@@ -30,7 +39,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('vacancies');
     }
