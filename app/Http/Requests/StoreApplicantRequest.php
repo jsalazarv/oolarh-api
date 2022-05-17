@@ -26,7 +26,7 @@ class StoreApplicantRequest extends FormRequest
     {
         return [
             'names' => ['required', 'string', 'max:255'],
-            'vacancy' => ['required', 'integer', 'max:255'],
+            'vacancy_id' => ['required', 'integer', 'max:255'],
             'first_surname' => ['required', 'string', 'max:255'],
             'second_surname' => ['required', 'string', 'max:255'],
             'email' => [

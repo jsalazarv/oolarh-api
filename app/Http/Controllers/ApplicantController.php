@@ -7,7 +7,6 @@ use App\Http\Requests\StoreApplicantRequest;
 use App\Http\Resources\ApplicantResource;
 use App\Models\Applicant;
 use Illuminate\Http\Request;
-use mysql_xdevapi\Exception;
 
 class ApplicantController extends Controller
 {
@@ -20,7 +19,12 @@ class ApplicantController extends Controller
     public function index(Request $request)
     {
         $applicants = Applicant::paginate($request->get('pageSize', 10));
-        $applicants->load('resume');
+        $applicants->load(
+            'resume',
+            'vacancy.branchOffice',
+            'vacancy.department',
+            'vacancy.job'
+        );
 
         return ApplicantResource::collection($applicants);
     }
@@ -39,7 +43,12 @@ class ApplicantController extends Controller
             'path' => $resume->store('public'),
             'file_name' => $resume->getClientOriginalName()
         ]);
-        $applicant->load('resume');
+        $applicant->load(
+            'resume',
+            'vacancy.branchOffice',
+            'vacancy.department',
+            'vacancy.job'
+        );
         return new ApplicantResource($applicant);
     }
 
@@ -49,8 +58,12 @@ class ApplicantController extends Controller
      */
     public function show($id): ApplicantResource
     {
-        $applicant = Applicant::find($id);
-        $applicant->load('resume');
+        $applicant = Applicant::with(
+            'resume',
+            'vacancy.branchOffice',
+            'vacancy.department',
+            'vacancy.job'
+        )->findOrFail($id);
 
         return new ApplicantResource($applicant);
     }
@@ -72,7 +85,11 @@ class ApplicantController extends Controller
                 'file_name' => $resume->getClientOriginalName()
             ]);
         }
-        $applicant->load('resume');
+        $applicant->load('resume',
+            'vacancy.branchOffice',
+            'vacancy.department',
+            'vacancy.job'
+        );
         $applicant->update($request->all());
 
         return new ApplicantResource($applicant);

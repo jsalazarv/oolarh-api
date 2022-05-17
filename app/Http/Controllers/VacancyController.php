@@ -47,7 +47,7 @@ class VacancyController extends Controller
      */
     public function show($id): VacancyResource
     {
-        $vacancy = Vacancy::find($id);
+        $vacancy = Vacancy::findOrFail($id);
         $vacancy->load('job', 'department', 'branchOffice');
 
         return new VacancyResource($vacancy);
