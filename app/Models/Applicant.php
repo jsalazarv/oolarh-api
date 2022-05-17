@@ -17,7 +17,7 @@ class Applicant extends Model
 
     protected $fillable = [
         'names',
-        'vacancy',
+        'vacancy_id',
         'first_surname',
         'second_surname',
         'email',
@@ -29,5 +29,9 @@ class Applicant extends Model
     public function resume()
     {
         return $this->morphOne(Resume::class, 'resumable');
+    }
+
+    public function vacancy() {
+        return $this->belongsTo(Vacancy::class);
     }
 }

@@ -35,4 +35,8 @@ class Vacancy extends Model
     public function branchOffice() {
         return $this->belongsTo(BranchOffice::class);
     }
+
+    public function applicant() {
+        return $this->hasMany(Applicant::class);
+    }
 }
