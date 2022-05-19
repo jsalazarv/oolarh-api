@@ -17,7 +17,11 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $employees = Employee::paginate($request->get('pageSize', 10));
-        // TODO: return relations
+        $employees->load(
+            'vacancy.branchOffice',
+            'vacancy.department',
+            'vacancy.job'
+        );
 
         return EmployeeResource::collection($employees);
     }
