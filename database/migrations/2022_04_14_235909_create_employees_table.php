@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('names');
-            $table->integer('vacancy'); // TODO: create polymorphic relationship with vacancies table
+            //$table->integer('vacancy'); // TODO: create polymorphic relationship with vacancies table
             $table->string('first_surname');
             $table->string('second_surname');
             $table->string('email')->unique();

@@ -26,7 +26,7 @@ class UpdateApplicantRequest extends FormRequest
     {
         return [
             'names' => ['sometimes', 'string', 'max:255'],
-            'vacancy' => ['sometimes', 'integer', 'max:255'],
+            'vacancy_id' => ['sometimes', 'integer', 'max:255'],
             'first_surname' => ['sometimes', 'string', 'max:255'],
             'second_surname' => ['sometimes', 'string', 'max:255'],
             'email' => [

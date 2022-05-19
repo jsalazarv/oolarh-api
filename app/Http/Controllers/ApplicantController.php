@@ -85,12 +85,13 @@ class ApplicantController extends Controller
                 'file_name' => $resume->getClientOriginalName()
             ]);
         }
-        $applicant->load('resume',
+        $applicant->update($request->all());
+        $applicant->load(
+            'resume',
             'vacancy.branchOffice',
             'vacancy.department',
             'vacancy.job'
         );
-        $applicant->update($request->all());
 
         return new ApplicantResource($applicant);
     }

@@ -15,11 +15,15 @@ class Employee extends Model
 
     protected $fillable = [
         'names',
-        'vacancy',
+        'vacancy_id',
         'first_surname',
         'second_surname',
         'email',
         'cellphone',
         'psychometric_test',
     ];
+
+    public function vacancy() {
+        return $this->belongsTo(Vacancy::class);
+    }
 }

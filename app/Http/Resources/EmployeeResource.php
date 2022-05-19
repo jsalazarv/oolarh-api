@@ -18,7 +18,7 @@ class EmployeeResource extends JsonResource
             'id' => $this->id,
             'names' => $this->names,
             'fullName' => $this->names . ' ' . $this->first_surname . ' ' . $this->second_surname,
-            'vacancy' => $this->vacancy,
+            'vacancy' => new VacancyResource($this->whenLoaded('vacancy')),
             'first_surname' => $this->first_surname,
             'second_surname' => $this->second_surname,
             'email' => $this->email,
