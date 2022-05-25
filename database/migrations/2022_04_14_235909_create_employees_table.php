@@ -16,12 +16,14 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('names');
-            //$table->integer('vacancy'); // TODO: create polymorphic relationship with vacancies table
             $table->string('first_surname');
             $table->string('second_surname');
-            $table->string('email')->unique();
-            $table->string('cellphone')->unique();
+            $table->string('birthday')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('rfc')->nullable();
+            $table->string('ssn')->nullable();
             $table->string('psychometric_test')->unique();
+            $table->string('salary')->nullable();
             $table->timestamps();
         });
     }

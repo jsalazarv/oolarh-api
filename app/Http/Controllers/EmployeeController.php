@@ -20,6 +20,8 @@ class EmployeeController extends Controller
         $employees = Employee::paginate($request->get('pageSize', 10));
         $employees->load(
             'resume',
+            'address',
+            'contact',
             'vacancy.branchOffice',
             'vacancy.department',
             'vacancy.job'
@@ -38,6 +40,26 @@ class EmployeeController extends Controller
     {
         $resume = $request->file('resume');
         $employee = Employee::create($request->all());
+        $employee->contact()->create([
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'cellphone' => $request->cellphone
+        ]);
+        $employee->address()->create([
+            'country' => $request->country,
+            'state' => $request->state,
+            'municipality' => $request->municipality,
+            'suburb' => $request->suburb,
+            'street' => $request->street,
+            'outdoor_number' => $request->outdoor_number,
+            'interior_number' => $request->interior_number,
+            'postal_code' => $request->postal_code
+        ]);
+        $employee->profile_status = "complete";
+        $employee->employee_status = "active";
+
+        $employee->save();
+
         $employee->resume()->create([
             'path' => $resume->store('public'),
             'file_name' => $resume->getClientOriginalName()
@@ -45,6 +67,8 @@ class EmployeeController extends Controller
 
         $employee->load(
             'resume',
+            'address',
+            'contact',
             'vacancy.branchOffice',
             'vacancy.department',
             'vacancy.job'
