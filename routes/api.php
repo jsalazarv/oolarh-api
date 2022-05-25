@@ -42,6 +42,7 @@ Route::group(['prefix' => 'applicants', 'middleware' => ['auth:sanctum']], funct
 Route::group(['prefix' => 'employees', 'middleware' => ['auth:sanctum']], function () {
     Route::get('/', [EmployeeController::class, 'index']);
     Route::post('/', [EmployeeController::class, 'store']);
+    Route::get('/{id}', [EmployeeController::class, 'show']);
     Route::delete('/{id}', [EmployeeController::class, 'destroy']);
 });
 

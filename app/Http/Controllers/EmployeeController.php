@@ -80,12 +80,19 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return EmployeeResource
      */
-    public function show($id)
+    public function show($id): EmployeeResource
     {
-        //
+        $employee = Employee::with(
+            'resume',
+            'vacancy.branchOffice',
+            'vacancy.department',
+            'vacancy.job'
+        )->findOrFail($id);
+
+        return new EmployeeResource($employee);
     }
 
     /**
