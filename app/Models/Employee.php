@@ -18,12 +18,30 @@ class Employee extends Model
 
     protected $fillable = [
         'names',
-        'vacancy_id',
         'first_surname',
         'second_surname',
-        'email',
+        'birthday',
+        'gender',
+        'rfc',
+        'ssn',
+        //'resume',
+
+        /*'email',
+        'phone',
         'cellphone',
+
+        'country',
+        'state',
+        'municipality',
+        'suburb',
+        'street',
+        'outdoor_number',
+        'interior_number',
+        'postal_code',*/
+
+        'vacancy_id',
         'psychometric_test',
+        'salary',
     ];
 
     public function resume()
@@ -33,5 +51,15 @@ class Employee extends Model
 
     public function vacancy() {
         return $this->belongsTo(Vacancy::class);
+    }
+
+    public function contact()
+    {
+        return $this->morphOne(Contact::class, 'contactable');
+    }
+
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'addressable');
     }
 }
