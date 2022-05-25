@@ -28,6 +28,10 @@ class ApplicantObserver
             $employee->profile_status = "incomplete";
             $employee->employee_status = "active";
             $employee->save();
+            $employee->contact()->create([
+                'email' => $applicant->email,
+                'cellphone' => $applicant->cellphone,
+            ]);
             $employee->resume()->create([
                 'path' => $resume->path,
                 'file_name' => $resume->file_name
