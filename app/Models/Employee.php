@@ -24,21 +24,6 @@ class Employee extends Model
         'gender',
         'rfc',
         'ssn',
-        //'resume',
-
-        /*'email',
-        'phone',
-        'cellphone',
-
-        'country',
-        'state',
-        'municipality',
-        'suburb',
-        'street',
-        'outdoor_number',
-        'interior_number',
-        'postal_code',*/
-
         'vacancy_id',
         'psychometric_test',
         'salary',

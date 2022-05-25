@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\employee\StoreEmployeeRequest;
+use App\Http\Requests\employee\UpdateEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -87,6 +88,8 @@ class EmployeeController extends Controller
     {
         $employee = Employee::with(
             'resume',
+            'address',
+            'contact',
             'vacancy.branchOffice',
             'vacancy.department',
             'vacancy.job'
@@ -98,13 +101,46 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateEmployeeRequest $request
+     * @param $id
+     * @return EmployeeResource
      */
-    public function update(Request $request, $id)
+    public function update(UpdateEmployeeRequest $request, $id): EmployeeResource
     {
-        //
+        $resume = $request->file('resume');
+        $employee = Employee::findOrFail($id);
+        $employee->contact()->update([
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'cellphone' => $request->cellphone
+        ]);
+        $employee->address()->update([
+            'country' => $request->country,
+            'state' => $request->state,
+            'municipality' => $request->municipality,
+            'suburb' => $request->suburb,
+            'street' => $request->street,
+            'outdoor_number' => $request->outdoor_number,
+            'interior_number' => $request->interior_number,
+            'postal_code' => $request->postal_code
+        ]);
+        if ($request->file('resume')) {
+            $employee->resume()->update([
+                'path' => $resume->store('public'),
+                'file_name' => $resume->getClientOriginalName()
+            ]);
+        }
+        $employee->update($request->all());
+        $employee->load(
+            'resume',
+            'address',
+            'contact',
+            'vacancy.branchOffice',
+            'vacancy.department',
+            'vacancy.job'
+        );
+
+        return new EmployeeResource($employee);
     }
 
     /**
@@ -115,8 +151,15 @@ class EmployeeController extends Controller
      */
     public function destroy($id): void
     {
-        Employee::findOrFail($id);
-        //TODO: load relationships
+        $employee = Employee::findOrFail($id);
+        $employee->load(
+            'resume',
+            'address',
+            'contact',
+        );
+        $employee->resume()->delete();
+        $employee->address()->delete();
+        $employee->contact()->delete();
         Employee::destroy($id);
     }
 }
