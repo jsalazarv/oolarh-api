@@ -19,6 +19,8 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('vacancies')
                 ->nullOnDelete();
+            $table->enum('profile_status', ['complete', 'incomplete'])->nullable();
+            $table->enum('employee_status', ['active', 'inactive'])->nullable();
         });
     }
 
@@ -32,6 +34,8 @@ return new class extends Migration
         Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign('employees_vacancy_id_foreign');
             $table->dropColumn('vacancy_id');
+            $table->dropColumn('profile_status');
+            $table->dropColumn('employee_status');
         });
     }
 };

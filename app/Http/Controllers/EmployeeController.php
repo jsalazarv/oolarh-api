@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\employee\StoreEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class EmployeeController extends Controller
     {
         $employees = Employee::paginate($request->get('pageSize', 10));
         $employees->load(
+            'resume',
             'vacancy.branchOffice',
             'vacancy.department',
             'vacancy.job'
@@ -29,12 +31,26 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreEmployeeRequest $request
+     * @return EmployeeResource
      */
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request): EmployeeResource
     {
-        //
+        $resume = $request->file('resume');
+        $employee = Employee::create($request->all());
+        $employee->resume()->create([
+            'path' => $resume->store('public'),
+            'file_name' => $resume->getClientOriginalName()
+        ]);
+
+        $employee->load(
+            'resume',
+            'vacancy.branchOffice',
+            'vacancy.department',
+            'vacancy.job'
+        );
+
+        return new EmployeeResource($employee);
     }
 
     /**
