@@ -24,7 +24,9 @@ class EmployeeResource extends JsonResource
             'email' => $this->email,
             'cellphone' => $this->cellphone,
             'psychometric_test' => $this->psychometric_test,
-            'status' => $this->status,
+            'resume' => new ResumeResource($this->whenLoaded('resume')),
+            'employee_status' => $this->employee_status,
+            'profile_status' => $this->profile_status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
