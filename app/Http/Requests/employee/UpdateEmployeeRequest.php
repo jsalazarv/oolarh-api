@@ -31,7 +31,7 @@ class UpdateEmployeeRequest extends FormRequest
             'gender' => ['required', 'string', 'max:255'],
             'rfc' => ['required', 'string', 'max:255'],
             'ssn' => ['required', 'string', 'max:255'],
-            'resume' => ['required','file', 'mimes:pdf', 'max:5000'],
+            'resume' => ['sometimes','file', 'mimes:pdf', 'max:5000'],
 
             'email' => [
                 'required',
