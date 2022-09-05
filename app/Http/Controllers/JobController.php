@@ -8,6 +8,7 @@ use App\Http\Resources\JobResource;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class JobController extends Controller
 {
@@ -15,11 +16,20 @@ class JobController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return AnonymousResourceCollection
+     * @return AnonymousResourceCollection|Response
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection | Response
     {
-        $jobs = Job::paginate($request->get("'pageSize', 10"));
+        $jobs = Job::paginate($request->get('pageSize', 10));
+
+        if($request->headers->get('Accept') == 'application/xml') {
+            $config = [
+                'template' => '<root></root>',
+                'rowName' => 'item'
+            ];
+
+            return response()->xml($jobs, 200, $config);
+        }
 
         return JobResource::collection($jobs);
     }

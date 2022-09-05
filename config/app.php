@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        XmlResponse\XmlResponseServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -197,7 +198,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'Xml' => XmlResponse\Facades\XmlFacade::class
     ])->toArray(),
 
 ];
