@@ -6,6 +6,8 @@ use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Resources\DepartmentResource;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class DepartmentController extends Controller
 {
@@ -13,11 +15,20 @@ class DepartmentController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return
+     * @return AnonymousResourceCollection|Response
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection | Response
     {
         $departments = Department::paginate($request->get('pageSize', 10));
+
+        if($request->headers->get('Accept') == 'application/xml') {
+            $config = [
+                'template' => '<root></root>',
+                'rowName' => 'item'
+            ];
+
+            return response()->xml($departments, 200, $config);
+        }
 
         return DepartmentResource::collection($departments);
     }
